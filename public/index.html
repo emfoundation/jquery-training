@@ -1,53 +1,27 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8">
     <title>jQuery's still got it</title>
     <link rel="stylesheet" href="main.css">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"
             integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
             crossorigin="anonymous"></script>
-  </head>
-  <body>
-    <div id="slider-container" data-module="slider">
-      <div class="slider-wrap">
-        <div class="slider">
-          <div class="slider-item">
-            <div class="content">content</div>
-          </div>
-          <div class="slider-item"></div>
-          <div class="slider-item"></div>
-          <div class="slider-item"></div>
-          <div class="slider-item">
-              <div class="content">content</div>
-          </div>
-          <div class="slider-item"></div>
+</head>
+<body>
+    <div id="tab-container">
+        <div class="tab-header">
+            <div class="tab is-active" data-tab="0">1</div>
+            <div class="tab" data-tab="1">2</div>
+            <div class="tab" data-tab="2">3</div>
         </div>
-      </div>
-      <br>
-      <div class="controls">
-        <button class="control left">&larr;</button>
-        <button class="control right">&rarr;</button>
-      </div>
+        <div class="tab-content-wrap">
+            <div id="tab0" class="tab-content is-active"></div>
+            <div id="tab1" class="tab-content"></div>
+            <div id="tab2" class="tab-content"></div>
+        </div>
     </div>
-    <br>
-    <div id="slider-container2">
-        <div class="slider-wrap">
-          <div class="slider">
-            <div class="slider-item">
-              <div class="content">content</div>
-            </div>
-            <div class="slider-item"></div>
-            <div class="slider-item"></div>
-            <div class="slider-item"></div>
-          </div>
-        </div>
-        <br>
-        <div class="controls">
-          <button class="control left">&larr;</button>
-          <button class="control right">&rarr;</button>
-        </div>
-      </div>
+    <script src="slider.js"></script>
     <script src="main.js"></script>
-  </body>
+</body>
 </html>

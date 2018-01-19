@@ -1,45 +1,46 @@
-var makeSlider = function ($container, numPerView) {
-  var $items = $container.find('.slider-item');
-  var $slider = $container.find('.slider');
-  var numItems = $items.length;
-  var npv = numPerView || 2;
-  var sliceEnd = npv === 1 ? undefined : 1 - npv;
-  var itemWidth = 100 / npv;
-  var states = $items.map(function (index) {
-    return index * itemWidth;
-  }).slice(0, sliceEnd).get();
-  var currentIndex = 0;
+var makeTabs = function ($container) {
+    var $tabs = $container.find('.tab');
 
-  console.log($container.data('module'))
+    var state = {
+        tabs: [false, false, false]
+    };
+    
+    $tabs.on('click', function () {
+        var id = $(this).data('tab');
 
-  $items.each(function (index) {
-    index = index % 4;
-    $(this).addClass('item' + (index + 1));
-  });
+        $container.find('.tab-content, .tab')
+            .removeClass('is-active')
+            .not('.tab')
+                .filter('#tab' + id)
+                    .addClass('is-active')
+                .end()
+            .end()
+        .filter(`[data-tab=${id}]`)
+            .addClass('is-active');
 
-  $slider.css('width', (numItems * itemWidth) + '%');
-  $items.css('width', (100 / numItems) + '%');
+        // only make the ajax request if the content hasn't been cached yet
+        if (!state.tabs[id]) {
+            $.ajax(`tabs/tab${id+1}.html`)
+                .done(function (data) {
+                    var $currentTab = $container.find('#tab' + id);
+                    $currentTab.html(data);
+                    // make sure not to get the content twice
+                    state.tabs[id] = true;
+                })
+                .fail(function (error) {
+                    console.log(error.responseText);
+                })
+        }
+    });
+    // make sure the active tab is fetched on page load
+    $tabs.filter('.is-active').trigger('click');
+};
 
-  $container.find('.control').on('click', function () {
-    var $this = $(this);
-    var goRight = $this.hasClass('right');
-    if (goRight) {
-      currentIndex = currentIndex < states.length - 1 ?
-        currentIndex + 1 : currentIndex;
-    } else {
-      currentIndex = currentIndex > 0 ?
-        currentIndex - 1 : currentIndex;
-    }
-    $slider.css('left', '-' + states[currentIndex] + '%');
-  });
-}
-
-// makeSlider($('#slider-container'));
-makeSlider($('#slider-container2'), 3);
+makeTabs($('#tab-container'));
 
 var moduleDispatcher = {
-  slider: makeSlider,
-  download: makeDownload
+  slider: makeSlider
 }
 
+// this won't work properly yet, will be fixed next session
 moduleDispatcher['slider']($('#slider-container'));

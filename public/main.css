@@ -1,3 +1,13 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: sans-serif;
+}
+
+/* Slider */
+
 .slider-wrap {
   height: 100px;
   width: 100%;
@@ -16,7 +26,6 @@
   height: 100%;
   width: 25%;
   float: left;
-  box-sizing: border-box;
 }
 
 .item1 {
@@ -41,4 +50,34 @@
 
 .controls {
   text-align: center;
+}
+
+/* Tabs */
+
+.tab {
+  float: left;
+  width: 33.3%;
+  text-align: center;
+  background: lightgray;
+  padding: 5px 0;
+  cursor: pointer;
+}
+.tab:hover {
+  background: gray;
+}
+.tab.is-active {
+  color: white;
+  background: black;
+}
+
+.tab-content-wrap {
+  clear: both;
+  padding: 5px;
+}
+
+.tab-content {
+  display: none;
+}
+.tab-content.is-active {
+  display: block;
 }
