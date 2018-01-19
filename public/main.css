@@ -1,0 +1,44 @@
+.slider-wrap {
+  height: 100px;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.slider {
+  height: 100%;
+  width: 200%;
+  position: relative;
+  left: 0;
+  transition: left 0.4s ease-out;
+}
+
+.slider-item {
+  height: 100%;
+  width: 25%;
+  float: left;
+  box-sizing: border-box;
+}
+
+.item1 {
+  padding: 5px;
+}
+.item1 .content {
+  height: 100%;
+  background: darkred;
+}
+.item2 {
+  height: 100%;
+  background: darkgreen;
+}
+.item3 {
+  height: 100%;
+  background: darkblue;
+}
+.item4 {
+  height: 100%;
+  background: orange;
+}
+
+.controls {
+  text-align: center;
+}
