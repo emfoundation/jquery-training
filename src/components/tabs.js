@@ -1,3 +1,5 @@
+var Dispatcher = require('../dispatcher')
+
 var makeTabs = function ($container) {
     var $tabs = $container.find('.tab');
 
@@ -23,7 +25,10 @@ var makeTabs = function ($container) {
             $.ajax(`tabs/tab${id+1}.html`)
                 .done(function (data) {
                     var $currentTab = $container.find('#tab' + id);
-                    $currentTab.html(data);
+                    var $component = $currentTab
+                        .html(data)
+                        .find('.component');
+                    Dispatcher.register($component);
                     // make sure not to get the content twice
                     state.tabs[id] = true;
                 })
@@ -36,11 +41,4 @@ var makeTabs = function ($container) {
     $tabs.filter('.is-active').trigger('click');
 };
 
-makeTabs($('#tab-container'));
-
-var moduleDispatcher = {
-  slider: makeSlider
-}
-
-// this won't work properly yet, will be fixed next session
-moduleDispatcher['slider']($('#slider-container'));
+module.exports = makeTabs;

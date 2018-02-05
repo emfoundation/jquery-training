@@ -4,6 +4,7 @@
   "description": "",
   "main": "gulpfile.js",
   "scripts": {
+    "bundle": "browserify src/main.js -o public/bundle.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -11,6 +12,7 @@
   "license": "ISC",
   "devDependencies": {
     "browser-sync": "^2.18.13",
+    "browserify": "^15.2.0",
     "gulp": "^3.9.1"
   }
 }

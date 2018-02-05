@@ -1,4 +1,4 @@
-var makeSlider = function ($container, numPerView) {
+module.exports = function ($container, numPerView) {
     var $items = $container.find('.slider-item');
     var $slider = $container.find('.slider');
     var numItems = $items.length;
