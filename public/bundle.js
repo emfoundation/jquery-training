@@ -47,63 +47,66 @@ module.exports = function ($container, numPerView) {
 };
 
 },{}],3:[function(require,module,exports){
-'use strict';
+"use strict";
 
-var Dispatcher = require('../dispatcher');
+var Dispatcher = require("../dispatcher");
 
 var makeTabs = function makeTabs($container) {
-    var $tabs = $container.find('.tab');
+  var $tabs = $container.find(".tab");
 
-    var state = {
-        tabs: [false, false, false]
-    };
+  var state = {
+    tabs: [false, false, false]
+  };
 
-    $tabs.on('click', function () {
-        var id = $(this).data('tab');
+  $tabs.on("click", function () {
+    var id = $(this).data("tab");
 
-        $container.find('.tab-content, .tab').removeClass('is-active').not('.tab').filter('#tab' + id).addClass('is-active').end().end().filter('[data-tab=' + id + ']').addClass('is-active');
+    $container.find(".tab-content, .tab").removeClass("is-active").not(".tab").filter("#tab" + id).addClass("is-active").end().end().filter("[data-tab=" + id + "]").addClass("is-active");
 
-        // only make the ajax request if the content hasn't been cached yet
-        if (!state.tabs[id]) {
-            $.ajax('tabs/tab' + (id + 1) + '.html').done(function (data) {
-                var $currentTab = $container.find('#tab' + id);
-                var $component = $currentTab.html(data).find('.component');
-                Dispatcher.register($component);
-                // make sure not to get the content twice
-                state.tabs[id] = true;
-            }).fail(function (error) {
-                console.log(error.responseText);
-            });
-        }
-    });
-    // make sure the active tab is fetched on page load
-    $tabs.filter('.is-active').trigger('click');
+    // will make the reloading of the tabs work next time
+    history.pushState({ id: id }, null, "tab" + (id + 1));
+
+    // only make the ajax request if the content hasn't been cached yet
+    if (!state.tabs[id]) {
+      $.ajax("tabs/tab" + (id + 1) + ".html").done(function (data) {
+        var $currentTab = $container.find("#tab" + id);
+        var $component = $currentTab.html(data).find(".component");
+        Dispatcher.register($component);
+        // make sure not to get the content twice
+        state.tabs[id] = true;
+      }).fail(function (error) {
+        console.log(error.responseText);
+      });
+    }
+  });
+  // make sure the active tab is fetched on page load
+  $tabs.filter(".is-active").trigger("click");
 };
 
 module.exports = makeTabs;
 
 },{"../dispatcher":4}],4:[function(require,module,exports){
-'use strict';
+"use strict";
 
-var makeSlider = require('./components/slider');
-var makeAlert = require('./components/alert');
+var makeSlider = require("./components/slider");
+var makeAlert = require("./components/alert");
 
 module.exports = function () {
-    var components = {
-        slider: makeSlider,
-        alert: makeAlert
-    };
+  var components = {
+    slider: makeSlider,
+    alert: makeAlert
+  };
 
-    function register($component) {
-        var componentType = $component.data('type');
-        if (componentType) {
-            components[componentType]($component);
-        }
+  function register($component) {
+    var componentType = $component.data("type");
+    if (componentType) {
+      components[componentType]($component);
     }
+  }
 
-    return {
-        register: register
-    };
+  return {
+    register: register
+  };
 }();
 
 },{"./components/alert":1,"./components/slider":2}],5:[function(require,module,exports){
